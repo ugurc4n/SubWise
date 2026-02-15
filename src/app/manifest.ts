@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "SubWise",
-    short_name: "SubWise",
+    name: "SubSly",
+    short_name: "SubSly",
     description: "Manage your subscriptions efficiently",
     start_url: "/",
     display: "standalone",

@@ -65,6 +65,10 @@ export function CategoryBreakdownChart() {
     color: item.category_color || DEFAULT_COLORS[index % DEFAULT_COLORS.length],
   }));
 
+  // Dinamik width hesapla - en uzun kategori adına göre
+  const maxCategoryLength = Math.max(...chartData.map(item => item.name.length));
+  const dynamicWidth = Math.min(Math.max(maxCategoryLength * 7 + 20, 120), 250);
+
   return (
     <Card className="border-border/50">
       <CardHeader>
@@ -73,9 +77,9 @@ export function CategoryBreakdownChart() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
+        <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} layout="vertical">
+            <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 20, top: 0, bottom: 0 }}>
               <XAxis
                 type="number"
                 fontSize={12}
@@ -93,17 +97,19 @@ export function CategoryBreakdownChart() {
                 axisLine={false}
                 stroke="oklch(0.8 0.15 195 / 15%)"
                 tick={{ fill: "oklch(0.75 0 0)" }}
-                width={100}
+                width={dynamicWidth}
               />
               <Tooltip
                 formatter={(value) => [formatCurrency(Number(value)), "Aylık"]}
                 contentStyle={{
-                  backgroundColor: "oklch(0.18 0.02 265 / 80%)",
-                  border: "1px solid oklch(0.8 0.15 195 / 30%)",
+                  backgroundColor: "oklch(0.12 0 0 / 90%)",
+                  border: "1px solid oklch(0.8 0.15 195 / 40%)",
                   borderRadius: "8px",
                   fontSize: "12px",
                   backdropFilter: "blur(12px)",
                   color: "hsl(var(--foreground))",
+                  padding: "8px 12px",
+                  boxShadow: "0 8px 16px oklch(0 0 0 / 40%)",
                 }}
               />
               <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>

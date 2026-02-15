@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -66,6 +66,7 @@ interface SubscriptionFormProps {
   onSubmit: (data: SubscriptionCreate) => void;
   onCancel: () => void;
   isLoading?: boolean;
+  modalScrollContainer?: React.RefObject<HTMLDivElement>;
 }
 
 export function SubscriptionForm({
@@ -73,6 +74,7 @@ export function SubscriptionForm({
   onSubmit,
   onCancel,
   isLoading,
+  modalScrollContainer,
 }: SubscriptionFormProps) {
   const { data: categoriesData } = useCategories();
   const categories = categoriesData?.items || [];
@@ -184,6 +186,22 @@ export function SubscriptionForm({
     null
   );
   const [isManualMode, setIsManualMode] = useState(false);
+  const packagesRef = useRef<HTMLDivElement>(null);
+
+  // Popüler abonelik (sağlayıcı) seçildiğinde modalın en altına scroll et
+  useEffect(() => {
+    if (selectedProviderId && modalScrollContainer?.current) {
+      const timer = setTimeout(() => {
+        if (modalScrollContainer.current) {
+          modalScrollContainer.current.scrollTo({
+            top: modalScrollContainer.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedProviderId, modalScrollContainer]);
 
   const selectedProvider = providers.find(
     (provider) => provider.id === selectedProviderId
@@ -207,6 +225,8 @@ export function SubscriptionForm({
         form.setValue("category_id", matchingCategory.id);
       }
     }
+
+
   };
 
   const handleSubmit = (data: FormData) => {
@@ -275,7 +295,7 @@ export function SubscriptionForm({
             </div>
 
             {selectedProvider ? (
-              <div className="mt-3 sm:mt-4 space-y-3">
+              <div ref={packagesRef} className="mt-3 sm:mt-4 space-y-3">
                 <div className="text-sm font-medium text-foreground">
                   {selectedProvider.name} Paketleri
                 </div>
@@ -327,23 +347,11 @@ export function SubscriptionForm({
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label className="text-sm">Fatura Periyodu</Label>
-                  <Select
-                    value={form.watch("billing_period")}
-                    onValueChange={(v) =>
-                      form.setValue(
-                        "billing_period",
-                        v as "weekly" | "monthly" | "yearly"
-                      )
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="monthly">Aylık</SelectItem>
-                      <SelectItem value="yearly">Yıllık</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Input
+                    value={form.watch("billing_period") === "yearly" ? "Yıllık" : form.watch("billing_period") === "monthly" ? "Aylık" : "Haftalık"}
+                    readOnly
+                    className="text-sm bg-muted/40 cursor-default"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Ödeme Tarihi</Label>
@@ -618,7 +626,7 @@ export function SubscriptionForm({
         <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto text-sm">
           İptal
         </Button>
-        <Button type="submit" disabled={isLoading} className="w-full sm:w-auto text-sm">
+        <Button type="submit" disabled={isLoading || (!isManualMode && !selectedTemplateKey && !subscription)} className="w-full sm:w-auto text-sm">
           {isLoading
             ? "Kaydediliyor..."
             : subscription

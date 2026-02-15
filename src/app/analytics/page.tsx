@@ -4,7 +4,6 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { SpendingTrendChart } from "@/components/analytics/spending-trend-chart";
 
 export const dynamic = 'force-dynamic';
-import { CategoryBreakdownChart } from "@/components/analytics/category-breakdown";
 import { CurrencySummary } from "@/components/analytics/currency-summary";
 
 export default function AnalyticsPage() {
@@ -22,10 +21,7 @@ export default function AnalyticsPage() {
 
       <SpendingTrendChart />
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <CategoryBreakdownChart />
-        <CurrencySummary />
-      </div>
+      <CurrencySummary />
       </div>
     </DashboardLayout>
   );

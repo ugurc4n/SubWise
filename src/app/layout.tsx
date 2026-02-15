@@ -9,14 +9,14 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SubWise - Subscription Management",
+  title: "SubSly - Subscription Management",
   description: "Manage your subscriptions efficiently",
   manifest: "/manifest.webmanifest",
   themeColor: "#0b0b0f",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "SubWise",
+    title: "SubSly",
   },
   icons: {
     icon: [

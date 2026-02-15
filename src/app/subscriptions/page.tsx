@@ -1,7 +1,7 @@
 "use client";
 
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export const dynamic = 'force-dynamic';
 import { useRouter } from "next/navigation";
@@ -42,6 +42,8 @@ export default function SubscriptionsPage() {
     useState<Subscription | null>(null);
   const [deletingSubscription, setDeletingSubscription] =
     useState<Subscription | null>(null);
+  const addModalContentRef = useRef<HTMLDivElement>(null);
+  const editModalContentRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading } = useSubscriptions();
   const createMutation = useCreateSubscription();
@@ -139,15 +141,18 @@ export default function SubscriptionsPage() {
 
       {/* Add Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Yeni Abonelik Ekle</DialogTitle>
-          </DialogHeader>
-          <SubscriptionForm
-            onSubmit={handleCreate}
-            onCancel={() => setIsFormOpen(false)}
-            isLoading={createMutation.isPending}
-          />
+        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl !p-0">
+          <div ref={addModalContentRef} className="max-h-[85vh] overflow-y-auto space-y-4 p-6">
+            <DialogHeader>
+              <DialogTitle>Yeni Abonelik Ekle</DialogTitle>
+            </DialogHeader>
+            <SubscriptionForm
+              onSubmit={handleCreate}
+              onCancel={() => setIsFormOpen(false)}
+              isLoading={createMutation.isPending}
+              modalScrollContainer={addModalContentRef}
+            />
+          </div>
         </DialogContent>
       </Dialog>
 
@@ -156,18 +161,21 @@ export default function SubscriptionsPage() {
         open={!!editingSubscription}
         onOpenChange={() => setEditingSubscription(null)}
       >
-        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Aboneliği Düzenle</DialogTitle>
-          </DialogHeader>
-          {editingSubscription && (
-            <SubscriptionForm
-              subscription={editingSubscription}
-              onSubmit={handleUpdate}
-              onCancel={() => setEditingSubscription(null)}
-              isLoading={updateMutation.isPending}
-            />
-          )}
+        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl !p-0">
+          <div ref={editModalContentRef} className="max-h-[85vh] overflow-y-auto space-y-4 p-6">
+            <DialogHeader>
+              <DialogTitle>Aboneliği Düzenle</DialogTitle>
+            </DialogHeader>
+            {editingSubscription && (
+              <SubscriptionForm
+                subscription={editingSubscription}
+                onSubmit={handleUpdate}
+                onCancel={() => setEditingSubscription(null)}
+                isLoading={updateMutation.isPending}
+                modalScrollContainer={editModalContentRef}
+              />
+            )}
+          </div>
         </DialogContent>
       </Dialog>
 

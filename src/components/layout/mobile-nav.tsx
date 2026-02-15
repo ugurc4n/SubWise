@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "Ana Sayfa", href: "/", icon: LayoutDashboard },
   { name: "Abonelikler", href: "/subscriptions", icon: CreditCard },
   { name: "Analiz", href: "/analytics", icon: BarChart3 },
   { name: "Ayarlar", href: "/settings", icon: Settings },
@@ -27,7 +27,7 @@ export function MobileNav() {
         <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary shadow-[0_0_20px_oklch(0.8_0.15_195_/_0.5)]">
           <Zap className="w-4 h-4 text-primary-foreground" />
         </div>
-        <span className="text-lg font-semibold tracking-tight bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">SubWise</span>
+        <span className="text-lg font-semibold tracking-tight bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">SubSly</span>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">

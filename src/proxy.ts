@@ -3,14 +3,16 @@ import type { NextRequest } from "next/server";
 import { auth } from "@/auth";
 
 export default async function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
   // Public paths that don't require authentication
-  const publicPaths = ["/sign-in", "/sign-up", "/test"];
-  const isPublicPath = publicPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  const publicPaths = ["/", "/sign-in", "/sign-up", "/test"];
+  const isPublicPath = 
+    pathname === "/" ||
+    publicPaths.some((path) => path !== "/" && pathname.startsWith(path));
 
   // Allow API routes
-  if (request.nextUrl.pathname.startsWith("/api")) {
+  if (pathname.startsWith("/api")) {
     return NextResponse.next();
   }
 
@@ -21,12 +23,12 @@ export default async function proxy(request: NextRequest) {
   // If not authenticated and trying to access protected route, redirect to sign-in
   if (!isAuthenticated && !isPublicPath) {
     const signInUrl = new URL("/sign-in", request.url);
-    signInUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+    signInUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(signInUrl);
   }
 
   // If authenticated and trying to access auth pages, redirect to dashboard
-  if (isAuthenticated && isPublicPath && request.nextUrl.pathname !== "/test") {
+  if (isAuthenticated && (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up"))) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
