@@ -3,7 +3,13 @@
 import { useTheme } from "next-themes";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { MobileNav } from "./mobile-nav";
 import { UserNav } from "./user-nav";
 
@@ -20,6 +26,9 @@ export function Topbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-0">
+          <SheetHeader className="sr-only">
+            <SheetTitle>Navigation menu</SheetTitle>
+          </SheetHeader>
           <MobileNav />
         </SheetContent>
       </Sheet>
