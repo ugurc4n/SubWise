@@ -57,6 +57,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   trustHost: true,
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnSignIn = nextUrl.pathname.startsWith("/sign-in");
+      const isOnSignUp = nextUrl.pathname.startsWith("/sign-up");
+      const isOnAuthPage = isOnSignIn || isOnSignUp;
+
+      // Giriş yapmış kullanıcıları auth sayfalarından yönlendir
+      if (isLoggedIn && isOnAuthPage) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+
+      // Giriş yapmamış kullanıcıları giriş sayfasına yönlendir
+      if (!isLoggedIn && !isOnAuthPage) {
+        return Response.redirect(new URL("/sign-in", nextUrl));
+      }
+
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
