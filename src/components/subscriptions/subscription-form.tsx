@@ -66,7 +66,7 @@ interface SubscriptionFormProps {
   onSubmit: (data: SubscriptionCreate) => void;
   onCancel: () => void;
   isLoading?: boolean;
-  modalScrollContainer?: React.RefObject<HTMLDivElement>;
+  modalScrollContainer?: React.RefObject<HTMLDivElement | null>;
 }
 
 export function SubscriptionForm({
