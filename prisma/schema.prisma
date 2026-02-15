@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String         @id @default(cuid())
+  clerkId         String         @unique @map("clerk_id")
+  email           String         @unique
+  name            String?
+  avatarUrl       String?        @map("avatar_url")
+  defaultCurrency String         @default("TRY") @map("default_currency")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  subscriptions Subscription[]
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  icon      String?
+  color     String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  subscriptions Subscription[]
+
+  @@map("categories")
+}
+
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String    @map("user_id")
+  categoryId       String?   @map("category_id")
+  name             String
+  description      String?
+  logoUrl          String?   @map("logo_url")
+  price            Decimal   @db.Decimal(10, 2)
+  currency         String    @default("TRY")
+  billingPeriod    String    @map("billing_period")
+  startDate        DateTime  @map("start_date")
+  nextBillingDate  DateTime  @map("next_billing_date")
+  isFreeTrial      Boolean   @default(false) @map("is_free_trial")
+  freeTrialEndDate DateTime? @map("free_trial_end_date")
+  isActive         Boolean   @default(true) @map("is_active")
+  notes            String?
+  url              String?
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@index([userId, isActive])
+  @@index([nextBillingDate])
+  @@map("subscriptions")
+}
+
+model ExchangeRate {
+  id             String   @id @default(cuid())
+  baseCurrency   String   @map("base_currency")
+  targetCurrency String   @map("target_currency")
+  rate           Decimal  @db.Decimal(12, 6)
+  fetchedAt      DateTime @map("fetched_at")
+  source         String   @default("TCMB")
+
+  @@unique([baseCurrency, targetCurrency, fetchedAt])
+  @@index([baseCurrency, targetCurrency])
+  @@map("exchange_rates")
+}
