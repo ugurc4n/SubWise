@@ -1,24 +1,20 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function getAuthUser() {
-  const { userId: clerkId } = await auth();
+  const session = await auth();
 
-  if (!clerkId) {
+  if (!session?.user?.email) {
     return { user: null, error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
   }
 
-  let user = await prisma.user.findUnique({ where: { clerkId } });
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
 
   if (!user) {
-    // Auto-create user on first API call
-    user = await prisma.user.create({
-      data: {
-        clerkId,
-        email: `${clerkId}@clerk.user`,
-      },
-    });
+    return { user: null, error: NextResponse.json({ error: "User not found" }, { status: 404 }) };
   }
 
   return { user, error: null };

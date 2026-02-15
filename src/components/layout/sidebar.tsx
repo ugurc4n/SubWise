@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
 import {
   LayoutDashboard,
   CreditCard,
@@ -11,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserNav } from "./user-nav";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -58,14 +58,7 @@ export function Sidebar() {
 
       <div className="border-t border-border p-4">
         <div className="flex items-center gap-3">
-          <UserButton
-            afterSignOutUrl="/sign-in"
-            appearance={{
-              elements: {
-                avatarBox: "w-8 h-8",
-              },
-            }}
-          />
+          <UserNav />
           <span className="text-sm text-muted-foreground">Hesabım</span>
         </div>
       </div>

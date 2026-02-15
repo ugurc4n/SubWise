@@ -1,11 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { UserButton } from "@clerk/nextjs";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MobileNav } from "./mobile-nav";
+import { UserNav } from "./user-nav";
 
 export function Topbar() {
   const { theme, setTheme } = useTheme();
@@ -37,7 +37,7 @@ export function Topbar() {
       </Button>
 
       <div className="lg:hidden">
-        <UserButton afterSignOutUrl="/sign-in" />
+        <UserNav />
       </div>
     </header>
   );
