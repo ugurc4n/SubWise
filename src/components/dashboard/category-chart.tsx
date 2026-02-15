@@ -13,13 +13,13 @@ import {
 } from "recharts";
 
 const DEFAULT_COLORS = [
-  "oklch(0.8 0.15 195)",   // Cyan
-  "oklch(0.7 0.25 340)",   // Hot Pink
-  "oklch(0.65 0.22 295)",  // Purple
-  "oklch(0.7 0.18 230)",   // Electric Blue
-  "oklch(0.75 0.2 45)",    // Neon Orange
-  "oklch(0.7 0.18 150)",   // Neon Green
-  "oklch(0.72 0.23 180)",  // Turquoise
+  "oklch(0.7 0.2 260)",    // Soft Purple
+  "oklch(0.75 0.18 200)",  // Soft Cyan
+  "oklch(0.65 0.15 320)",  // Soft Magenta
+  "oklch(0.72 0.16 180)",  // Soft Teal
+  "oklch(0.68 0.18 280)",  // Soft Violet
+  "oklch(0.76 0.14 220)",  // Soft Sky Blue
+  "oklch(0.70 0.17 240)",  // Soft Blue Purple
 ];
 
 export function CategoryChart() {
@@ -81,17 +81,33 @@ export function CategoryChart() {
                   stroke="oklch(0.145 0 0)"
                 >
                   {chartData.map((entry, index) => (
-                    <Cell key={index} fill={entry.color} style={{ filter: "drop-shadow(0 0 8px oklch(0.8 0.15 195 / 0.4))" }} />
+                    <Cell 
+                      key={index} 
+                      fill={entry.color} 
+                      style={{ 
+                        filter: "drop-shadow(0 0 4px oklch(0.7 0.15 240 / 0.2))" 
+                      }} 
+                    />
                   ))}
                 </Pie>
                 <Tooltip
                   formatter={(value) => formatCurrency(Number(value))}
                   contentStyle={{
-                    backgroundColor: "oklch(0.18 0.02 265 / 80%)",
-                    border: "1px solid oklch(0.8 0.15 195 / 30%)",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                    backdropFilter: "blur(12px)",
+                    backgroundColor: "oklch(0.25 0.03 265)",
+                    border: "1px solid oklch(0.7 0.15 240 / 50%)",
+                    borderRadius: "12px",
+                    fontSize: "13px",
+                    padding: "10px 14px",
+                    color: "oklch(0.95 0 0)",
+                    boxShadow: "0 4px 16px oklch(0 0 0 / 0.4)",
+                  }}
+                  labelStyle={{
+                    color: "oklch(0.95 0 0)",
+                    fontWeight: "600",
+                    marginBottom: "4px",
+                  }}
+                  itemStyle={{
+                    color: "oklch(0.95 0 0)",
                   }}
                 />
               </PieChart>

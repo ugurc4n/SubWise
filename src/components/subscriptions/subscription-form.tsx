@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Check } from "lucide-react";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { GOOGLE_ONE_TEMPLATES } from "@/lib/subscription-templates";
 import {
   Select,
   SelectContent,
@@ -40,6 +41,7 @@ const formSchema = z.object({
   description: z.string().optional(),
   notes: z.string().optional(),
   url: z.string().url("Geçerli bir URL girin").optional().or(z.literal("")),
+  logo_url: z.string().optional().or(z.literal("")),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -80,10 +82,30 @@ export function SubscriptionForm({
       description: subscription?.description || "",
       notes: subscription?.notes || "",
       url: subscription?.url || "",
+      logo_url: subscription?.logo_url || "",
     },
   });
 
   const isFreeTrial = form.watch("is_free_trial");
+
+  const handleTemplateSelect = (templateIndex: number) => {
+    const template = GOOGLE_ONE_TEMPLATES[templateIndex];
+    form.setValue("name", template.name);
+    form.setValue("price", template.price);
+    form.setValue("currency", template.currency);
+    form.setValue("billing_period", template.billing_period);
+    form.setValue("description", template.description);
+    form.setValue("url", template.url || "");
+    form.setValue("logo_url", template.logo_url);
+    
+    // Auto-set category to Cloud Storage (Bulut Depolama)
+    const cloudStorageCategory = categories.find(
+      (cat) => cat.name === "Bulut Depolama"
+    );
+    if (cloudStorageCategory) {
+      form.setValue("category_id", cloudStorageCategory.id);
+    }
+  };
 
   const handleSubmit = (data: FormData) => {
     onSubmit({
@@ -96,11 +118,62 @@ export function SubscriptionForm({
       description: data.description || null,
       notes: data.notes || null,
       url: data.url || null,
+      logo_url: data.logo_url || null,
     });
   };
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+      {/* Popular Subscriptions Templates Section */}
+      <div className="space-y-3">
+        <Label className="text-base font-semibold">Popüler Abonelikler</Label>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {GOOGLE_ONE_TEMPLATES.map((template, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => handleTemplateSelect(index)}
+              className="relative flex items-start gap-3 rounded-lg border-2 border-muted bg-muted/30 p-3 transition-all hover:border-primary hover:bg-muted/50 active:scale-95"
+            >
+              {/* Logo */}
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md bg-white">
+                <img
+                  src={template.logo_url}
+                  alt={template.name}
+                  className="h-10 w-10 object-contain"
+                />
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 text-left">
+                <h4 className="text-sm font-medium leading-tight text-foreground">
+                  {template.name}
+                </h4>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {template.price} {template.currency}
+                </p>
+              </div>
+
+              {/* Check icon on hover */}
+              <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 opacity-0 transition-opacity hover:opacity-100">
+                <Check className="h-3 w-3 text-primary" />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-muted" />
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-background px-2 text-xs text-muted-foreground">
+            veya manuel olarak ekleyin
+          </span>
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="name">Servis Adı</Label>

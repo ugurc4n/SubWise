@@ -94,13 +94,15 @@ export function SpendingTrendChart() {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="oklch(0.8 0.15 195 / 15%)"
+                tick={{ fill: "oklch(0.75 0 0)" }}
               />
               <YAxis
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="oklch(0.8 0.15 195 / 15%)"
+                tick={{ fill: "oklch(0.75 0 0)" }}
                 tickFormatter={(value) => `${(value / 1000).toFixed(0)}K`}
               />
               <Tooltip
@@ -111,6 +113,7 @@ export function SpendingTrendChart() {
                   borderRadius: "8px",
                   fontSize: "12px",
                   backdropFilter: "blur(12px)",
+                  color: "hsl(var(--foreground))",
                 }}
               />
               <Area

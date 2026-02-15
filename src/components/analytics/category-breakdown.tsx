@@ -81,7 +81,8 @@ export function CategoryBreakdownChart() {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="oklch(0.8 0.15 195 / 15%)"
+                tick={{ fill: "oklch(0.75 0 0)" }}
                 tickFormatter={(value) => formatCurrency(value)}
               />
               <YAxis
@@ -90,7 +91,8 @@ export function CategoryBreakdownChart() {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="oklch(0.8 0.15 195 / 15%)"
+                tick={{ fill: "oklch(0.75 0 0)" }}
                 width={100}
               />
               <Tooltip
@@ -101,6 +103,7 @@ export function CategoryBreakdownChart() {
                   borderRadius: "8px",
                   fontSize: "12px",
                   backdropFilter: "blur(12px)",
+                  color: "hsl(var(--foreground))",
                 }}
               />
               <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
