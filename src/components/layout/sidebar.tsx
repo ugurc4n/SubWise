@@ -23,12 +23,12 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:border-r lg:border-border bg-sidebar">
-      <div className="flex h-16 items-center gap-2 px-6 border-b border-border">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
+    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:border-r lg:border-sidebar-border bg-sidebar backdrop-blur-2xl">
+      <div className="flex h-16 items-center gap-2 px-6 border-b border-sidebar-border">
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary shadow-[0_0_20px_oklch(0.8_0.15_195_/_0.5)]">
           <Zap className="w-4 h-4 text-primary-foreground" />
         </div>
-        <span className="text-lg font-semibold tracking-tight">SubWise</span>
+        <span className="text-lg font-semibold tracking-tight bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">SubWise</span>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">
@@ -43,10 +43,10 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
                 isActive
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                  ? "bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-primary border border-cyan-500/30 shadow-[0_0_15px_oklch(0.8_0.15_195_/_0.3)]"
+                  : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 hover:border hover:border-cyan-500/20"
               )}
             >
               <item.icon className="w-4 h-4" />

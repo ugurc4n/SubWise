@@ -2,9 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const currencyColors: Record<string, string> = {
-  TRY: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-  USD: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-  EUR: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+  TRY: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40 backdrop-blur-sm shadow-[0_0_10px_oklch(0.7_0.18_150_/_0.3)]",
+  USD: "bg-blue-500/20 text-blue-400 border-blue-500/40 backdrop-blur-sm shadow-[0_0_10px_oklch(0.7_0.18_230_/_0.3)]",
+  EUR: "bg-purple-500/20 text-purple-400 border-purple-500/40 backdrop-blur-sm shadow-[0_0_10px_oklch(0.65_0.22_295_/_0.3)]",
 };
 
 export function CurrencyBadge({ currency }: { currency: string }) {

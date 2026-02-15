@@ -18,12 +18,12 @@ export function TrialWarnings() {
         <Alert
           key={trial.subscription_id}
           variant={trial.days_remaining <= 3 ? "destructive" : "default"}
-          className="border-border/50"
+          className="border-border/50 backdrop-blur-xl bg-card/60 shadow-[0_0_20px_oklch(0.75_0.2_45_/_0.3)] animate-pulse-slow"
         >
           {trial.days_remaining <= 3 ? (
-            <AlertTriangle className="h-4 w-4" />
+            <AlertTriangle className="h-4 w-4 drop-shadow-[0_0_8px_oklch(0.7_0.22_355)]" />
           ) : (
-            <Clock className="h-4 w-4" />
+            <Clock className="h-4 w-4 drop-shadow-[0_0_8px_oklch(0.75_0.2_45)]" />
           )}
           <AlertTitle className="text-sm font-medium">
             {trial.name} deneme süresi bitiyor

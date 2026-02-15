@@ -15,13 +15,13 @@ import {
 } from "recharts";
 
 const DEFAULT_COLORS = [
-  "#6366f1",
-  "#8b5cf6",
-  "#ec4899",
-  "#f97316",
-  "#10b981",
-  "#06b6d4",
-  "#f43f5e",
+  "oklch(0.8 0.15 195)",   // Cyan
+  "oklch(0.7 0.25 340)",   // Hot Pink
+  "oklch(0.65 0.22 295)",  // Purple
+  "oklch(0.7 0.18 230)",   // Electric Blue
+  "oklch(0.75 0.2 45)",    // Neon Orange
+  "oklch(0.7 0.18 150)",   // Neon Green
+  "oklch(0.72 0.23 180)",  // Turquoise
 ];
 
 export function CategoryBreakdownChart() {
@@ -96,15 +96,16 @@ export function CategoryBreakdownChart() {
               <Tooltip
                 formatter={(value) => [formatCurrency(Number(value)), "Aylık"]}
                 contentStyle={{
-                  backgroundColor: "hsl(var(--popover))",
-                  border: "1px solid hsl(var(--border))",
+                  backgroundColor: "oklch(0.18 0.02 265 / 80%)",
+                  border: "1px solid oklch(0.8 0.15 195 / 30%)",
                   borderRadius: "8px",
                   fontSize: "12px",
+                  backdropFilter: "blur(12px)",
                 }}
               />
               <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                 {chartData.map((entry, index) => (
-                  <Cell key={index} fill={entry.color} />
+                  <Cell key={index} fill={entry.color} style={{ filter: "drop-shadow(0 0 6px oklch(0.8 0.15 195 / 0.3))" }} />
                 ))}
               </Bar>
             </BarChart>

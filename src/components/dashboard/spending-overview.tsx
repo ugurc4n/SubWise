@@ -15,17 +15,17 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, subtitle }: StatCardProps) {
   return (
-    <Card className="border-border/50">
+    <Card className="border-border/50 group hover:scale-[1.02] transition-transform duration-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">{title}</p>
-            <p className="text-2xl font-semibold tracking-tight">{value}</p>
+            <p className="text-2xl font-semibold tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">{value}</p>
             {subtitle && (
               <p className="text-xs text-muted-foreground">{subtitle}</p>
             )}
           </div>
-          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10">
+          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 shadow-[0_0_20px_oklch(0.8_0.15_195_/_0.4)] group-hover:shadow-[0_0_30px_oklch(0.8_0.15_195_/_0.6)] transition-shadow duration-300">
             {icon}
           </div>
         </div>

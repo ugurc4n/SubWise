@@ -68,7 +68,7 @@ export function UpcomingPayments() {
           return (
             <div
               key={payment.subscription_id}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent/20 transition-colors border border-transparent hover:border-cyan-500/20"
             >
               <ServiceIcon
                 name={payment.name}
@@ -87,7 +87,7 @@ export function UpcomingPayments() {
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium">
+                <p className="text-sm font-medium bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
                   {formatCurrency(payment.price, payment.currency)}
                 </p>
                 {payment.currency !== "TRY" && (

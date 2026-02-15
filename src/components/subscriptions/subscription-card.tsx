@@ -42,12 +42,12 @@ export function SubscriptionCard({
   } = subscription;
 
   return (
-    <div className="group flex items-center gap-4 rounded-xl border border-border/50 bg-card p-4 transition-colors hover:bg-accent/30">
+    <div className="group flex items-center gap-4 rounded-xl border border-cyan-500/20 bg-card backdrop-blur-xl p-4 transition-all duration-300 hover:border-pink-500/40 hover:shadow-[0_0_20px_oklch(0.7_0.25_340_/_0.3)] hover:scale-[1.01]">
       <ServiceIcon name={name} logoUrl={logo_url} size="lg" />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-sm font-semibold truncate">{name}</h3>
+          <h3 className="text-sm font-semibold truncate group-hover:text-primary transition-colors">{name}</h3>
           {category && (
             <Badge
               variant="outline"
@@ -79,7 +79,7 @@ export function SubscriptionCard({
       </div>
 
       <div className="text-right">
-        <p className="text-sm font-semibold">
+        <p className="text-sm font-semibold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
           {formatCurrency(price, currency)}
         </p>
         {currency !== "TRY" && price_in_try && (
@@ -114,7 +114,7 @@ export function SubscriptionCard({
           )}
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="text-destructive"
+            className="text-destructive hover:shadow-[0_0_15px_oklch(0.7_0.22_355_/_0.4)]"
             onClick={() => onDelete(subscription)}
           >
             <Trash2 className="h-4 w-4 mr-2" />

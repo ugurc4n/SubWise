@@ -55,11 +55,11 @@ export function CurrencySummary() {
           {breakdown.map((item) => (
             <div
               key={item.currency}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between p-2 rounded-lg hover:bg-accent/20 transition-colors border border-transparent hover:border-cyan-500/20"
             >
               <div className="flex items-center gap-3">
                 <CurrencyBadge currency={item.currency} />
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
                   {formatCurrency(item.total, item.currency)}
                 </span>
               </div>
@@ -69,9 +69,9 @@ export function CurrencySummary() {
             </div>
           ))}
 
-          <div className="border-t border-border pt-3 flex items-center justify-between">
+          <div className="border-t border-cyan-500/20 pt-3 flex items-center justify-between">
             <span className="text-sm font-semibold">Toplam (Aylık)</span>
-            <span className="text-sm font-semibold">
+            <span className="text-sm font-semibold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
               {formatCurrency(data?.total_monthly_try || 0)}
             </span>
           </div>
