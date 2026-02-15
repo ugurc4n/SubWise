@@ -139,7 +139,7 @@ export default function SubscriptionsPage() {
 
       {/* Add Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="w-full sm:!max-w-5xl !max-w-[calc(100%-2rem)]">
+        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Yeni Abonelik Ekle</DialogTitle>
           </DialogHeader>
@@ -156,7 +156,7 @@ export default function SubscriptionsPage() {
         open={!!editingSubscription}
         onOpenChange={() => setEditingSubscription(null)}
       >
-        <DialogContent className="w-full sm:!max-w-5xl !max-w-[calc(100%-2rem)]">
+        <DialogContent className="w-full max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Aboneliği Düzenle</DialogTitle>
           </DialogHeader>

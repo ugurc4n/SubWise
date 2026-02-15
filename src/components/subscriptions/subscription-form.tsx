@@ -225,14 +225,14 @@ export function SubscriptionForm({
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 sm:space-y-6">
       {!isManualMode ? (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <div className="space-y-3">
-            <Label className="text-base font-semibold">
+            <Label className="text-sm sm:text-base font-semibold">
               Popüler Abonelikler
             </Label>
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
               {providers.map((provider) => (
                 <button
                   key={provider.id}
@@ -250,7 +250,7 @@ export function SubscriptionForm({
                     }
                   }
                   className={cn(
-                    "relative flex items-center gap-3 rounded-lg border-2 border-muted bg-muted/30 p-3 transition-all hover:border-primary hover:bg-muted/50 active:scale-95",
+                    "relative flex items-center gap-3 rounded-lg border-2 border-muted bg-muted/30 p-3 sm:p-3 transition-all hover:border-primary hover:bg-muted/50 active:scale-[0.98]",
                     selectedProviderId === provider.id &&
                       "border-primary bg-muted/60"
                   )}
@@ -266,7 +266,7 @@ export function SubscriptionForm({
                     <h4 className="text-sm font-medium leading-snug text-foreground break-words">
                       {provider.name}
                     </h4>
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="mt-0.5 sm:mt-1 text-xs text-muted-foreground">
                       Paketleri gor
                     </p>
                   </div>
@@ -275,18 +275,18 @@ export function SubscriptionForm({
             </div>
 
             {selectedProvider ? (
-              <div className="mt-4 space-y-3">
+              <div className="mt-3 sm:mt-4 space-y-3">
                 <div className="text-sm font-medium text-foreground">
                   {selectedProvider.name} Paketleri
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
                   {selectedProvider.templates.map((template, index) => (
                     <button
                       key={`${selectedProvider.id}-${index}`}
                       type="button"
                       onClick={() => handleTemplateSelect(template)}
                       className={cn(
-                        "relative flex items-start gap-3 rounded-lg border-2 border-muted bg-muted/30 p-3 transition-all hover:border-primary hover:bg-muted/50 active:scale-95",
+                        "relative flex items-start gap-3 rounded-lg border-2 border-muted bg-muted/30 p-3 transition-all hover:border-primary hover:bg-muted/50 active:scale-[0.98]",
                         selectedTemplateKey ===
                           `${template.name}-${template.price}` &&
                           "border-primary bg-muted/60"
@@ -304,7 +304,7 @@ export function SubscriptionForm({
                         <h4 className="text-sm font-medium leading-snug text-foreground break-words">
                           {template.name}
                         </h4>
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <p className="mt-0.5 sm:mt-1 text-xs text-muted-foreground">
                           {template.price} {template.currency}
                         </p>
                       </div>
@@ -320,13 +320,13 @@ export function SubscriptionForm({
           </div>
 
           {selectedTemplateKey ? (
-            <div className="space-y-3 rounded-lg border border-muted bg-muted/20 p-3">
+            <div className="space-y-3 rounded-lg border border-muted bg-muted/20 p-3 sm:p-4">
               <div className="text-sm font-medium text-foreground">
                 Hizli Duzenleme
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label>Fatura Periyodu</Label>
+                  <Label className="text-sm">Fatura Periyodu</Label>
                   <Select
                     value={form.watch("billing_period")}
                     onValueChange={(v) =>
@@ -346,7 +346,7 @@ export function SubscriptionForm({
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Ödeme Tarihi</Label>
+                  <Label className="text-sm">Ödeme Tarihi</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -377,12 +377,13 @@ export function SubscriptionForm({
                   </Popover>
                 </div>
 
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="notes">Notlar</Label>
+                <div className="space-y-2 col-span-1 sm:col-span-2">
+                  <Label htmlFor="notes" className="text-sm">Notlar</Label>
                   <Textarea
                     id="notes"
                     placeholder="Opsiyonel notlar..."
                     rows={2}
+                    className="text-sm"
                     {...form.register("notes")}
                   />
                 </div>
@@ -393,31 +394,34 @@ export function SubscriptionForm({
           <Button
             type="button"
             variant="outline"
-            className="w-full"
+            className="w-full text-sm"
             onClick={() => setIsManualMode(true)}
           >
             Manuel olarak ekle
           </Button>
         </div>
       ) : (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Label className="text-base font-semibold">Manuel Ekleme</Label>
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <Label className="text-sm sm:text-base font-semibold">Manuel Ekleme</Label>
             <Button
               type="button"
               variant="ghost"
+              size="sm"
+              className="text-xs sm:text-sm w-full sm:w-auto"
               onClick={() => setIsManualMode(false)}
             >
               Populer abonelikleri goster
             </Button>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="name">Servis Adı</Label>
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+            <div className="space-y-2 col-span-1 sm:col-span-2">
+              <Label htmlFor="name" className="text-sm">Servis Adı</Label>
               <Input
                 id="name"
                 placeholder="Netflix, Spotify..."
+                className="text-sm"
                 {...form.register("name")}
               />
               {form.formState.errors.name && (
@@ -428,12 +432,13 @@ export function SubscriptionForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="price">Fiyat</Label>
+              <Label htmlFor="price" className="text-sm">Fiyat</Label>
               <Input
                 id="price"
                 type="number"
                 step="0.01"
                 placeholder="0.00"
+                className="text-sm"
                 {...form.register("price", { valueAsNumber: true })}
               />
               {form.formState.errors.price && (
@@ -444,7 +449,7 @@ export function SubscriptionForm({
             </div>
 
             <div className="space-y-2">
-              <Label>Para Birimi</Label>
+              <Label className="text-sm">Para Birimi</Label>
               <Select
                 value={form.watch("currency")}
                 onValueChange={(v) =>
@@ -463,7 +468,7 @@ export function SubscriptionForm({
             </div>
 
             <div className="space-y-2">
-              <Label>Fatura Periyodu</Label>
+              <Label className="text-sm">Fatura Periyodu</Label>
               <Select
                 value={form.watch("billing_period")}
                 onValueChange={(v) =>
@@ -473,7 +478,7 @@ export function SubscriptionForm({
                   )
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -484,7 +489,7 @@ export function SubscriptionForm({
             </div>
 
             <div className="space-y-2">
-              <Label>Kategori</Label>
+              <Label className="text-sm">Kategori</Label>
               <Select
                 value={form.watch("category_id") || ""}
                 onValueChange={(v) =>
@@ -505,7 +510,7 @@ export function SubscriptionForm({
             </div>
 
             <div className="space-y-2">
-              <Label>Ödeme Tarihi</Label>
+              <Label className="text-sm">Ödeme Tarihi</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -536,9 +541,9 @@ export function SubscriptionForm({
               </Popover>
             </div>
 
-            <div className="space-y-2 sm:col-span-2">
+            <div className="space-y-2 col-span-1 sm:col-span-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_free_trial">Ücretsiz Deneme</Label>
+                <Label htmlFor="is_free_trial" className="text-sm">Ücretsiz Deneme</Label>
                 <Switch
                   id="is_free_trial"
                   checked={isFreeTrial}
@@ -548,8 +553,8 @@ export function SubscriptionForm({
             </div>
 
             {isFreeTrial && (
-              <div className="space-y-2 sm:col-span-2">
-                <Label>Deneme Bitiş Tarihi</Label>
+              <div className="space-y-2 col-span-1 sm:col-span-2">
+                <Label className="text-sm">Deneme Bitiş Tarihi</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -584,22 +589,24 @@ export function SubscriptionForm({
               </div>
             )}
 
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="url">Website URL</Label>
+            <div className="space-y-2 col-span-1 sm:col-span-2">
+              <Label htmlFor="url" className="text-sm">Website URL</Label>
               <Input
                 id="url"
                 type="url"
                 placeholder="https://..."
+                className="text-sm"
                 {...form.register("url")}
               />
             </div>
 
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="notes">Notlar</Label>
+            <div className="space-y-2 col-span-1 sm:col-span-2">
+              <Label htmlFor="notes" className="text-sm">Notlar</Label>
               <Textarea
                 id="notes"
                 placeholder="Opsiyonel notlar..."
                 rows={2}
+                className="text-sm"
                 {...form.register("notes")}
               />
             </div>
@@ -607,11 +614,11 @@ export function SubscriptionForm({
         </div>
       )}
 
-      <div className="flex justify-end gap-3">
-        <Button type="button" variant="outline" onClick={onCancel}>
+      <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 pt-2">
+        <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto text-sm">
           İptal
         </Button>
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="w-full sm:w-auto text-sm">
           {isLoading
             ? "Kaydediliyor..."
             : subscription
