@@ -1,6 +1,9 @@
 "use client";
 
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { useSession } from "next-auth/react";
+
+export const dynamic = 'force-dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -53,7 +56,8 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <DashboardLayout>
+      <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Ayarlar</h1>
         <p className="text-sm text-muted-foreground mt-1">
@@ -130,6 +134,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

@@ -1,12 +1,16 @@
 "use client";
 
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { SpendingTrendChart } from "@/components/analytics/spending-trend-chart";
+
+export const dynamic = 'force-dynamic';
 import { CategoryBreakdownChart } from "@/components/analytics/category-breakdown";
 import { CurrencySummary } from "@/components/analytics/currency-summary";
 
 export default function AnalyticsPage() {
   return (
-    <div className="space-y-6">
+    <DashboardLayout>
+      <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
           Finansal Analiz
@@ -22,6 +26,7 @@ export default function AnalyticsPage() {
         <CategoryBreakdownChart />
         <CurrencySummary />
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

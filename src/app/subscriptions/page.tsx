@@ -1,6 +1,9 @@
 "use client";
 
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { useState } from "react";
+
+export const dynamic = 'force-dynamic';
 import { useRouter } from "next/navigation";
 import { Plus, CreditCard } from "lucide-react";
 import { toast } from "sonner";
@@ -81,7 +84,8 @@ export default function SubscriptionsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <DashboardLayout>
+      <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Abonelikler</h1>
@@ -191,6 +195,7 @@ export default function SubscriptionsPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
