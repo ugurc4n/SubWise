@@ -51,7 +51,11 @@ export default function SignUpPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Kayıt başarısız");
+        // Daha spesifik hata mesajı göster
+        const errorMessage = data.error || "Kayıt başarısız";
+        toast.error(errorMessage);
+        setIsLoading(false);
+        return;
       }
 
       toast.success("Kayıt başarılı! Giriş yapılıyor...");
@@ -71,7 +75,8 @@ export default function SignUpPage() {
         router.refresh();
       }
     } catch (error: any) {
-      toast.error(error.message || "Bir hata oluştu");
+      console.error("Registration error:", error);
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setIsLoading(false);
     }
